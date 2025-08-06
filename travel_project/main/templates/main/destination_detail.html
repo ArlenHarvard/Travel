@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+  <!-- ***** Главный баннер (О направлении) ***** -->
+  <div class="about-main-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="content">
+            <div class="blur-bg"></div>
+            <h4>ИССЛЕДУЙ МИР</h4>
+            <div class="line-dec"></div>
+            <h2>{{ destination.title }}</h2>
+            <p>{{ destination.description }}</p>
+            <div class="main-button">
+              <a href="{% url 'home' %}">Вернуться на главную</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Конец баннера ***** -->
+
+<div class="cities-town">
+  <div class="container">
+    <div class="row">
+      <div class="slider-content">
+        <div class="row">
+          <div class="col-lg-12">
+            <h2>{{ destination.title }} и <em>главные города</em></h2>
+          </div>
+          <div class="col-lg-12">
+            <div class="owl-cites-town owl-carousel">
+              {% for place in places %}
+              <div class="item">
+                <div class="thumb">
+                  {% if place.image %}
+                    <img src="{{ place.image.url }}" alt="{{ place.title }}">
+                  {% else %}
+                    <img src="{% static 'assets/images/default-city.jpg' %}" alt="Город">
+                  {% endif %}
+                  <h4>{{ place.title }}</h4>
+                </div>
+              </div>
+              {% empty %}
+                <p>Пока нет городов для этого направления.</p>
+              {% endfor %}
+            </div> <!-- carousel -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ***** Еженедельные предложения ***** -->
+<div class="weekly-offers">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 offset-lg-3">
+        <div class="section-heading text-center">
+          <h2>Лучшие предложения для {{ destination.title }}</h2>
+          <p>Здесь можно разместить акции или туры для путешественников.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="owl-weekly-offers owl-carousel">
+          {% for offer in weekly_offers %}
+          <div class="item">
+            <div class="thumb">
+              {% if offer.image %}
+                <img src="{{ offer.image.url }}" alt="{{ offer.title }}">
+              {% else %}
+                <img src="{% static 'assets/images/default-offer.jpg' %}" alt="{{ offer.title }}">
+              {% endif %}
+              <div class="text">
+                <h4>{{ offer.title }}<br><span><i class="fa fa-users"></i> {{ offer.bookings }} брони</span></h4>
+                <h6>${{ offer.price }}<br><span>/чел.</span></h6>
+                <div class="line-dec"></div>
+                <ul>
+                  <li>Включено в предложение:</li>
+                  {% if offer.includes_hotel %}
+                    <li><i class="fa fa-taxi"></i> {{ offer.days }} дней + отель</li>
+                  {% else %}
+                    <li><i class="fa fa-taxi"></i> {{ offer.days }} дней тура</li>
+                  {% endif %}
+                  {% if offer.includes_flight %}
+                    <li><i class="fa fa-plane"></i> Авиабилет включён</li>
+                  {% endif %}
+                  {% if offer.includes_excursions %}
+                    <li><i class="fa fa-building"></i> Экскурсии</li>
+                  {% endif %}
+                </ul>
+                <div class="main-button">
+                  <a href="{% url 'home' %}">Посмотреть другие</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% empty %}
+          <p>Пока нет предложений для этого направления.</p>
+          {% endfor %}
+        </div> <!-- carousel -->
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- ***** Подробности о стране ***** -->
+  <div class="more-about">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 align-self-center">
+          <div class="left-image">
+            {% if destination.image %}
+              <img src="{{ destination.image.url }}" alt="{{ destination.title }}">
+            {% else %}
+              <img src="{% static 'assets/images/about-left-image.jpg' %}" alt="Default">
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="section-heading">
+            <h2>Узнай больше о {{ destination.title }}</h2>
+            <p>{{ destination.description }}</p>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="info-item">
+                <h4>{{ destination.formatted_population }}</h4>
+                <span>Население</span>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="info-item">
+                <h4>{{ destination.formatted_area }}</h4>
+                <span>Площадь</span>
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <div class="info-item">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <h4>{{ destination.formatted_gdp }}</h4>
+                    <span>ВВП</span>
+                  </div>
+                  <div class="col-lg-6">
+                    <h4>{{ destination.continent }}</h4>
+                    <span>Континент</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p>Дата добавления: {{ destination.created_at|date:"d.m.Y" }}</p>
+          <div class="main-button">
+            <a href="{% url 'home' %}">Назад</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ***** Призыв к действию ***** -->
+  <div class="call-to-action">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <h2>Хотите поехать в {{ destination.title }}?</h2>
+          <h4>Выберите дату и отправляйтесь в путешествие!</h4>
+        </div>
+        <div class="col-lg-4">
+          <div class="border-button">
+            <a href="{% url 'home' %}">Выбрать другое направление</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

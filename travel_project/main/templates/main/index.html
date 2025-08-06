@@ -1,0 +1,320 @@
+{% extends "base.html" %}
+
+{% load static %}  {# load static должен быть в начале шаблона, сразу после extends #}
+
+{% block title %}Главная | WoOx Travel{% endblock %}
+{% block nav_home %}active{% endblock %}
+
+{% block content %}
+
+<!-- ***** Главный баннер (Начало) ***** -->
+<section id="section-1">
+  <div class="content-slider">
+    <input type="radio" id="banner1" class="sec-1-input" name="banner" checked>
+    <input type="radio" id="banner2" class="sec-1-input" name="banner">
+    <input type="radio" id="banner3" class="sec-1-input" name="banner">
+    <input type="radio" id="banner4" class="sec-1-input" name="banner">
+
+    <!-- Баннеры с проверками наличия объекта и slug -->
+    <div class="slider">
+
+      {% if destinations|length > 0 and destinations.0.slug %}
+      <!-- Баннер 1 -->
+      <div id="top-banner-1" class="banner" style="background-image: url('{{ destinations.0.image.url }}');">
+        <div class="banner-inner-wrapper header-text">
+          <div class="main-caption">
+            <h2>Откройте для себя прекрасную страну:</h2>
+            <h1>{{ destinations.0.title }}</h1>
+            <div class="border-button"><a href="{% url 'destination_detail' destinations.0.slug %}">Подробнее</a></div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="more-info">
+                  <div class="row">
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <i class="fa fa-user"></i>
+                      <h4><span>Население:</span><br>{{ destinations.0.formatted_population }}</h4>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <i class="fa fa-globe"></i>
+                      <h4><span>Территория:</span><br>{{ destinations.0.formatted_area }}</h4>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <i class="fa fa-home"></i>
+                      <h4><span>ВВП:</span><br>{{ destinations.0.formatted_gdp }}</h4>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <div class="main-button">
+                        <a href="{% url 'destination_detail' destinations.0.slug %}">Узнать больше</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+      {% if destinations|length > 1 and destinations.1.slug %}
+      <!-- Баннер 2 -->
+      <div id="top-banner-2" class="banner" style="background-image: url('{{ destinations.1.image.url }}');">
+        <div class="banner-inner-wrapper header-text">
+          <div class="main-caption">
+            <h2>Откройте для себя прекрасную страну:</h2>
+            <h1>{{ destinations.1.title }}</h1>
+            <div class="border-button"><a href="{% url 'destination_detail' destinations.1.slug %}">Подробнее</a></div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="more-info">
+                  <div class="row">
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <i class="fa fa-user"></i>
+                      <h4><span>Население:</span><br>{{ destinations.1.formatted_population }}</h4>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <i class="fa fa-globe"></i>
+                      <h4><span>Территория:</span><br>{{ destinations.1.formatted_area }}</h4>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <i class="fa fa-home"></i>
+                      <h4><span>ВВП:</span><br>{{ destinations.1.formatted_gdp }}</h4>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <div class="main-button">
+                        <a href="{% url 'destination_detail' destinations.1.slug %}">Узнать больше</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+      {% if destinations|length > 2 and destinations.2.slug %}
+      <!-- Баннер 3 -->
+      <div id="top-banner-3" class="banner" style="background-image: url('{{ destinations.2.image.url }}');">
+        <div class="banner-inner-wrapper header-text">
+          <div class="main-caption">
+            <h2>Откройте для себя прекрасную страну:</h2>
+            <h1>{{ destinations.2.title }}</h1>
+            <div class="border-button"><a href="{% url 'destination_detail' destinations.2.slug %}">Подробнее</a></div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="more-info">
+                  <div class="row">
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <i class="fa fa-user"></i>
+                      <h4><span>Население:</span><br>{{ destinations.2.formatted_population }}</h4>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <i class="fa fa-globe"></i>
+                      <h4><span>Территория:</span><br>{{ destinations.2.formatted_area }}</h4>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <i class="fa fa-home"></i>
+                      <h4><span>ВВП:</span><br>{{ destinations.2.formatted_gdp }}</h4>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <div class="main-button">
+                        <a href="{% url 'destination_detail' destinations.2.slug %}">Узнать больше</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+      {% if destinations|length > 3 and destinations.3.slug %}
+      <!-- Баннер 4 -->
+      <div id="top-banner-4" class="banner" style="background-image: url('{{ destinations.3.image.url }}');">
+        <div class="banner-inner-wrapper header-text">
+          <div class="main-caption">
+            <h2>Откройте для себя прекрасную страну:</h2>
+            <h1>{{ destinations.3.title }}</h1>
+            <div class="border-button"><a href="{% url 'destination_detail' destinations.3.slug %}">Подробнее</a></div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="more-info">
+                  <div class="row">
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <i class="fa fa-user"></i>
+                      <h4><span>Население:</span><br>{{ destinations.3.formatted_population }}</h4>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <i class="fa fa-globe"></i>
+                      <h4><span>Территория:</span><br>{{ destinations.3.formatted_area }}</h4>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <i class="fa fa-home"></i>
+                      <h4><span>ВВП:</span><br>{{ destinations.3.formatted_gdp }}</h4>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <div class="main-button">
+                        <a href="{% url 'destination_detail' destinations.3.slug %}">Узнать больше</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+    </div>
+
+    <!-- Переключатели -->
+    <nav>
+      <div class="controls">
+        <label for="banner1"><span class="progressbar"><span class="progressbar-fill"></span></span><span class="text">1</span></label>
+        <label for="banner2"><span class="progressbar"><span class="progressbar-fill"></span></span><span class="text">2</span></label>
+        <label for="banner3"><span class="progressbar"><span class="progressbar-fill"></span></span><span class="text">3</span></label>
+        <label for="banner4"><span class="progressbar"><span class="progressbar-fill"></span></span><span class="text">4</span></label>
+      </div>
+    </nav>
+  </div>
+</section>
+<!-- ***** Главный баннер (Конец) ***** -->
+
+
+
+<!-- ***** Страны ***** -->
+<div class="visit-country">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-5">
+        <div class="section-heading">
+          <h2>Посетите одну из наших стран</h2>
+          <p>Лучшие направления для путешествий и незабываемых впечатлений.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Список направлений -->
+      <div class="col-lg-8">
+        <div class="items">
+          {% for dest in page_obj %}
+            <div class="item {% if forloop.last %}last-item{% endif %}">
+              <div class="row">
+                <div class="col-lg-4 col-sm-5">
+                  <div class="image">
+                    {% if dest.image %}
+                      <img src="{{ dest.image.url }}" alt="{{ dest.title }}">
+                    {% else %}
+                      <img src="{% static 'assets/images/default-country.jpg' %}" alt="{{ dest.title }}">
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="col-lg-8 col-sm-7">
+                  <div class="right-content">
+                    <h4>{{ dest.title }}</h4>
+                    <span>{{ dest.get_continent_display }}</span>
+                    <div class="main-button">
+                      <a href="{% url 'destination_detail' dest.slug %}">Подробнее</a>
+                    </div>
+                    <p>{{ dest.description|truncatewords:20 }}</p>
+                    <ul class="info">
+                      <li><i class="fa fa-user"></i> {{ dest.formatted_population }}</li>
+                      <li><i class="fa fa-globe"></i> {{ dest.formatted_area }}</li>
+                      <li><i class="fa fa-home"></i> {{ dest.formatted_gdp }}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% empty %}
+            <p>Направления не найдены.</p>
+          {% endfor %}
+        </div>
+
+        <!-- Пагинация -->
+        <ul class="page-numbers">
+          {% if page_obj.has_previous %}
+            <li><a href="?page={{ page_obj.previous_page_number }}"><i class="fa fa-arrow-left"></i></a></li>
+          {% endif %}
+
+          {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+              <li class="active"><a href="?page={{ num }}">{{ num }}</a></li>
+            {% else %}
+              <li><a href="?page={{ num }}">{{ num }}</a></li>
+            {% endif %}
+          {% endfor %}
+
+          {% if page_obj.has_next %}
+            <li><a href="?page={{ page_obj.next_page_number }}"><i class="fa fa-arrow-right"></i></a></li>
+          {% endif %}
+        </ul>
+      </div>
+
+      <!-- Карта -->
+      <div class="col-lg-4">
+        <div class="side-bar-map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18..."
+            width="100%" height="550px" style="border:0; border-radius:23px;" allowfullscreen=""
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ***** Призыв к действию ***** -->
+<div class="call-to-action">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <h2>Хотите отправиться в путешествие?</h2>
+        <h4>Забронируйте поездку прямо сейчас!</h4>
+      </div>
+      <div class="col-lg-4">
+        <div class="border-button">
+          <a href="/reservation/">Забронировать</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Скрипты для работы сайта -->
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/js/isotope.min.js' %}"></script>
+<script src="{% static 'assets/js/owl-carousel.js' %}"></script>
+<script src="{% static 'assets/js/wow.js' %}"></script>
+<script src="{% static 'assets/js/tabs.js' %}"></script>
+<script src="{% static 'assets/js/popup.js' %}"></script>
+<script src="{% static 'assets/js/custom.js' %}"></script>
+
+<script>
+  function bannerSwitcher() {
+    let next = document.querySelector('.sec-1-input:checked').nextElementSibling;
+    if (next && next.classList.contains('sec-1-input')) {
+      next.checked = true;
+    } else {
+      document.querySelectorAll('.sec-1-input')[0].checked = true;
+    }
+  }
+  setInterval(bannerSwitcher, 5000);
+</script>
+
+{% endblock %}

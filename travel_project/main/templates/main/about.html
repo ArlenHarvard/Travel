@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}О нас | Arlen and Ilimbek{% endblock %}
+{% block nav_about %}active{% endblock %}
+
+{% block content %}
+<section class="about-section" style="padding: 60px 0; background: #f9f9f9;">
+  <div class="container">
+    <div class="section-heading text-center">
+      <h2>О проекте WoOx Travel</h2>
+      <p>Сайт для бронирования путешествий и отпусков — быстро, удобно и надёжно.</p>
+    </div>
+    <div class="row" style="margin-top: 40px;">
+      <div class="col-lg-6">
+        <img src="{% static 'assets/images/about-photo.jpg' %}" alt="Создатель сайта" style="width: 100%; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+      </div>
+      <div class="col-lg-6">
+        <h3>Привет!</h3>
+        <p><p>Мы — создатели этого проекта: Арлен и Илимбек. Нам нравится помогать людям открывать новые страны и планировать незабываемые отпуска. Этот сайт — наш способ сделать бронирование путешествий максимально простым и приятным.</p>
+
+<p>WoOx Travel предлагает удобный интерфейс для выбора направлений, просмотра эксклюзивных предложений, а также лёгкое бронирование туров и отелей. На сайте собраны лучшие места для отдыха, а также еженедельные акции и специальные предложения, которые помогут сделать ваш отдых ещё выгоднее и интереснее.</p>
+
+<p>Спасибо, что посетили наш сайт! Если у вас есть вопросы или предложения, не стесняйтесь связаться с нами — мы всегда рады помочь!</p>
+</p>
+        <div class="main-button" style="margin-top: 30px;">
+          <a href="{% url 'home' %}">Вернуться на главную</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
