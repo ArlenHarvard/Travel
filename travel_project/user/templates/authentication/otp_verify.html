@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center py-5" style="min-height: 80vh;">
+    <div class="auth-card w-100" style="max-width: 420px; border-radius: 1rem; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.15); background: white;">
+
+        <!-- Заголовок -->
+        <div class="text-center text-white py-3" style="background: linear-gradient(135deg, #6c63ff, #836fff); border-top-left-radius: 1rem; border-top-right-radius: 1rem;">
+            <h3 class="mb-0">Введите одноразовый код</h3>
+        </div>
+
+        <!-- Форма -->
+        <div class="p-4">
+            {% if error %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endif %}
+
+            <form method="post" class="mb-3">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <input type="text"
+                           maxlength="6"
+                           name="otp"
+                           placeholder="______"
+                           class="form-control text-center fs-3"
+                           style="letter-spacing: 10px;"
+                           required>
+                </div>
+                <button type="submit" class="btn w-100" style="background:#6c63ff; color:white; border-radius:999px;">
+                    Подтвердить
+                </button>
+            </form>
+
+            <!-- Повторная отправка -->
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" name="resend" id="resend-btn"
+                        class="btn btn-link w-100 mt-2"
+                        style="color:#6c63ff;" disabled>
+                    Выслать повторно (60)
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    let countdown = 60;
+    const resendBtn = document.getElementById("resend-btn");
+
+    let timer = setInterval(() => {
+        countdown--;
+        resendBtn.textContent = `Выслать повторно (${countdown})`;
+
+        if (countdown <= 0) {
+            clearInterval(timer);
+            resendBtn.textContent = "Выслать повторно";
+            resendBtn.disabled = false;
+        }
+    }, 1000);
+</script>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center py-5" style="min-height: 100vh;">
+    <div class="card w-100" style="max-width: 420px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden; background-color: #fff;">
+
+        <!-- Заголовок -->
+        <div class="text-center text-white py-4" style="background: linear-gradient(135deg, #00bfff, #1e90ff);">
+            <h3 class="mb-0">Создать аккаунт</h3>
+        </div>
+
+        <!-- Контент -->
+        <div class="px-4 py-4">
+            {% if user.is_authenticated %}
+                <div class="alert alert-info text-center">
+                    Вы уже вошли в систему как <strong>{{ user.username }}</strong>.
+                </div>
+                <div class="text-center mt-3">
+                    <a href="{% url 'logout' %}" class="btn btn-outline-primary">Выйти из аккаунта</a>
+                </div>
+            {% else %}
+                {% if form.errors %}
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            {% for field, errors in form.errors.items %}
+                                {% for error in errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
+                <form method="post" novalidate>
+                    {% csrf_token %}
+
+                    <div class="form-group mb-3">
+                        <label class="form-label">Имя пользователя</label>
+                        {{ form.username|add_class:"form-control" }}
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="form-label">Email</label>
+                        {{ form.email|add_class:"form-control" }}
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="form-label">Пароль</label>
+                        {{ form.password1|add_class:"form-control" }}
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label class="form-label">Подтверждение пароля</label>
+                        {{ form.password2|add_class:"form-control" }}
+                    </div>
+
+                    <button type="submit" class="btn w-100" style="background: #00bfff; color: white; border-radius: 50px;">
+                        Зарегистрироваться
+                    </button>
+                </form>
+
+                <div class="text-center mt-3">
+                    Уже есть аккаунт?
+                    <a href="{% url 'login' %}" style="color: #1e90ff; font-weight: 500;">Войти</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
