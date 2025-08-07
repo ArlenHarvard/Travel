@@ -4,6 +4,7 @@ from .models import *
 from django.core.paginator import Paginator
 
 
+
 def index(request):
     destinations = Destination.objects.all()
     paginator = Paginator(destinations, 3)  # 3 записи на страницу
@@ -30,3 +31,38 @@ def destination_detail(request, slug):
 
 def about_view(request):
     return render(request, 'main/about.html')
+
+
+from django.shortcuts import render
+from .models import WeeklyOffer, Destination
+
+def weekly_deals_view(request):
+    offers = WeeklyOffer.objects.select_related('destination').all()
+
+    # Получаем уникальные направления из всех офферов
+    destinations = Destination.objects.filter(weekly_offers__in=offers).distinct()
+
+    destination_slug = request.GET.get('destination')
+    price_range = request.GET.get('price_range')
+
+    if destination_slug:
+        offers = offers.filter(destination__slug=destination_slug)
+
+    if price_range:
+        try:
+            if price_range == "2500+":
+                offers = offers.filter(price__gte=2500)
+            else:
+                min_price, max_price = map(int, price_range.split('-'))
+                offers = offers.filter(price__gte=min_price, price__lte=max_price)
+        except ValueError:
+            pass
+
+    return render(request, 'main/deals.html', {
+        'offers': offers,
+        'destinations': destinations,
+    })
+
+
+def reservation_view(request):
+    return render(request, 'main/reservation.html')

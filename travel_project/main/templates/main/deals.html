@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="page-heading">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <h4>Откройте для себя наши еженедельные предложения</h4>
+        <h2>Удивительные цены и многое другое</h2>
+        <div class="border-button"><a href="{% url 'about' %}">Узнать больше</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="search-form">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <form id="search-form" name="gs" method="get" role="search" action=".">
+          <div class="row">
+            <div class="col-lg-2">
+              <h4>Сортировать предложения по:</h4>
+            </div>
+            <div class="col-lg-4">
+              <fieldset>
+                <select class="form-select" name="destination">
+                  <option selected disabled>Направления</option>
+                  {% for dest in destinations %}
+                    <option value="{{ dest.slug }}" {% if request.GET.destination == dest.slug %}selected{% endif %}>{{ dest.title }}</option>
+                  {% endfor %}
+                </select>
+              </fieldset>
+            </div>
+            <div class="col-lg-4">
+              <fieldset>
+                <select class="form-select" name="price_range">
+                  <option selected disabled>Диапазон цен</option>
+                  <option value="100-250" {% if request.GET.price_range == "100-250" %}selected{% endif %}>$100 - $250</option>
+                  <option value="250-500" {% if request.GET.price_range == "250-500" %}selected{% endif %}>$250 - $500</option>
+                  <option value="500-1000" {% if request.GET.price_range == "500-1000" %}selected{% endif %}>$500 - $1,000</option>
+                  <option value="1000-2500" {% if request.GET.price_range == "1000-2500" %}selected{% endif %}>$1,000 - $2,500</option>
+                  <option value="2500+" {% if request.GET.price_range == "2500+" %}selected{% endif %}>$2,500 и выше</option>
+                </select>
+              </fieldset>
+            </div>
+            <div class="col-lg-2">
+              <fieldset>
+                <button type="submit" class="border-button">Показать результаты</button>
+              </fieldset>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="amazing-deals">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 offset-lg-3">
+        <div class="section-heading text-center">
+          <h2>Лучшие еженедельные предложения в каждом городе</h2>
+          <p>Откройте для себя лучшие туристические предложения, подобранные специально для вас.</p>
+        </div>
+      </div>
+
+      {% for offer in offers %}
+      <div class="col-lg-6 col-sm-6">
+        <div class="item">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="image">
+                {% if offer.image %}
+                  <img src="{{ offer.image.url }}" alt="{{ offer.title }}">
+                {% else %}
+                  <img src="{% static 'images/default-offer.jpg' %}" alt="Стандартное предложение">
+                {% endif %}
+              </div>
+            </div>
+            <div class="col-lg-6 align-self-center">
+              <div class="content">
+                <span class="info">*Специальное еженедельное предложение</span>
+                <h4>{{ offer.title }}</h4>
+                <div class="row">
+                  <div class="col-6">
+                    <i class="fa fa-clock"></i>
+                    <span class="list">{{ offer.days }} дней</span>
+                  </div>
+                  <div class="col-6">
+                    <i class="fa fa-map"></i>
+                    <span class="list">{{ offer.destination.title }}</span>
+                  </div>
+                </div>
+                <p>{{ offer.description|truncatewords:20 }}</p>
+                <p><strong>${{ offer.price }}</strong></p>
+                <div class="main-button">
+                  <a href="{% url 'reservation' %}">Подробнее о направлении</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <p>По вашему запросу не найдено предложений.</p>
+      {% endfor %}
+
+    </div>
+  </div>
+</div>
+
+<div class="call-to-action">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <h2>Хотите отправиться в путешествие?</h2>
+        <h4>Забронируйте тур, нажав на кнопку</h4>
+      </div>
+      <div class="col-lg-4">
+        <div class="border-button">
+          <a href="#">Забронировать сейчас</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

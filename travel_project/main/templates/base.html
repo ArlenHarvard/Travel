@@ -50,7 +50,7 @@
           <ul class="nav">
             <li><a href="/" class="{% block nav_home %}{% endblock %}">Главная</a></li>
             <li><a href="{% url 'about' %}" class="{% block nav_about %}{% endblock %}">О нас</a></li>
-            <li><a href="/reservation/" class="{% block nav_reservation %}{% endblock %}">Бронирование</a></li>
+            <li><a href="{% url 'deals' %}" class="{% block nav_reservation %}{% endblock %}">Бронирование</a></li>
             <li><a href="/deals/" class="{% block nav_deals %}{% endblock %}">Настройки</a></li>
             <li><a href="/reservation/" class="{% block nav_book %}{% endblock %}">Зарегистрироваться</a></li>
           </ul>
