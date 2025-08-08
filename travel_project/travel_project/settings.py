@@ -79,8 +79,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        'OPTIONS': {
+            # Комментируем или убираем foreign_keys, если он стоит
+            # 'foreign_keys': True,
+        },
     }
 }
+
 
 
 # Password validation

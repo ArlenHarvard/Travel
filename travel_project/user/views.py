@@ -151,3 +151,22 @@ def manage_2fa(request):
         return redirect('manage_2fa')
 
     return render(request, 'authentication/manage_2fa.html', {'user': user})
+
+
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .models import OTP
+
+
+@login_required
+def delete_otp(request, otp_id):
+    otp = get_object_or_404(OTP, id=otp_id, user=request.user)
+
+    try:
+        otp.delete()
+        messages.success(request, "OTP успешно удалён")
+    except Exception as e:
+        messages.error(request, f"Ошибка при удалении OTP: {str(e)}")
+
+    return redirect('profile')  # Или куда надо

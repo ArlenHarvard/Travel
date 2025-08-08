@@ -75,11 +75,23 @@ class MyUser(AbstractBaseUser):
         return self.is_admin
 
 
+from django.db import models
+from django.utils import timezone
+from django.conf import settings
+
+
 class OTP(models.Model):
-    user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,  # При удалении пользователя удалять все его OTP
+        related_name='otps'
+    )
     code = models.CharField(max_length=6)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def is_valid(self):
+        # Срок действия 60 секунд
         return (timezone.now() - self.created_at).total_seconds() <= 60
 
+    def __str__(self):
+        return f"OTP {self.code} для {self.user.email}"

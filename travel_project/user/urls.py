@@ -8,5 +8,7 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('otp_verify/<int:user_id>/', views.otp_verify_view, name='otp_verify'),
     path('profile/', views.user_profile, name='profile'),
-    path('profile/2fa/', views.manage_2fa, name='manage_2fa'),  # новый путь для управления 2FA
+    path('profile/2fa/', views.manage_2fa, name='manage_2fa'),
+    path('otp/delete/<int:otp_id>/', views.delete_otp, name='delete_otp'),
+    # новый путь для управления 2FA
 ]

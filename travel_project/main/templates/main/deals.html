@@ -15,6 +15,11 @@
   </div>
 </div>
 
+{% if request.user.is_authenticated and request.user.role|lower == 'manager' %}
+<div class="container text-end my-4">
+  <a href="{% url 'add_offer' %}" class="btn btn-success">Добавить предложение</a>
+</div>
+{% endif %}
 
 <div class="search-form">
   <div class="container">
@@ -98,9 +103,24 @@
                 </div>
                 <p>{{ offer.description|truncatewords:20 }}</p>
                 <p><strong>${{ offer.price }}</strong></p>
-                <div class="main-button">
+                <div class="main-button mb-2">
                   <a href="{% url 'reservation' %}">Подробнее о направлении</a>
                 </div>
+
+{% if request.user.is_authenticated and request.user.role|lower == 'manager' %}
+
+
+{% endif %}
+
+
+
+{% if request.user.is_authenticated and request.user.role|lower == 'manager' %}
+<form action="{% url 'delete_offer' offer.id %}" method="post" onsubmit="return confirm('Удалить это предложение?');">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-sm btn-outline-danger">Удалить</button>
+</form>
+{% endif %}
+
               </div>
             </div>
           </div>
@@ -109,7 +129,6 @@
       {% empty %}
       <p>По вашему запросу не найдено предложений.</p>
       {% endfor %}
-
     </div>
   </div>
 </div>

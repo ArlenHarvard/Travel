@@ -1,7 +1,10 @@
 # main/views.py
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
 from django.core.paginator import Paginator
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required, user_passes_test
+from .forms import WeeklyOfferForm
 
 
 
@@ -66,3 +69,42 @@ def weekly_deals_view(request):
 
 def reservation_view(request):
     return render(request, 'main/reservation.html')
+
+
+
+
+def is_manager(user):
+    # приводим роль к нижнему регистру для надёжности
+    return user.role.lower() == 'manager' or user.is_superuser
+
+
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+
+@login_required
+@user_passes_test(is_manager)
+def add_weekly_offer(request):
+    if request.method == 'POST':
+        form = WeeklyOfferForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "✅ Предложение добавлено")
+            return redirect('home')  # или куда хочешь
+    else:
+        form = WeeklyOfferForm()
+    return render(request, 'main/add_offer.html', {'form': form})
+
+
+@login_required
+@user_passes_test(is_manager)
+def delete_weekly_offer(request, pk):
+    offer = get_object_or_404(WeeklyOffer, pk=pk)
+
+    if request.method == 'POST':
+        offer.delete()
+        messages.success(request, "🗑️ Предложение удалено")
+        return redirect('home')
+
+    # Можно сделать страницу подтверждения удаления, но если не нужна, редирект
+    return redirect('home')
